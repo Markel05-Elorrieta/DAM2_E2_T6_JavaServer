@@ -9,5 +9,12 @@
         <property name="hibernate.connection.url">jdbc:mysql://35.180.66.214:3306/elorbase</property>
         <property name="hibernate.connection.username">adminElorbase</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <mapping resource="model/Ciclos.hbm.xml"/>
+        <mapping resource="model/Users.hbm.xml"/>
+        <mapping resource="model/Modulos.hbm.xml"/>
+        <mapping resource="model/Tipos.hbm.xml"/>
+        <mapping resource="model/Matriculaciones.hbm.xml"/>
+        <mapping resource="model/Horarios.hbm.xml"/>
+        <mapping resource="model/Reuniones.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
