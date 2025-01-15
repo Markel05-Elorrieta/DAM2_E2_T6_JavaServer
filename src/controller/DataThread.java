@@ -70,12 +70,14 @@ public class DataThread extends Thread {
 		
 		switch (command[0]) {
 		case "user":
-			UsersDAO usersDao = new UsersDAO();
+			UsersDao usersDao = new UsersDao();
 			oos.writeObject(usersDao.getUserById(command[1]));
+			System.out.println("User sent");
 			break;
 		default:
-			UsersDAO usersDaoDefault = new UsersDAO();
+			UsersDao usersDaoDefault = new UsersDao();
 			usersDaoDefault.getUsers();
+			System.out.println("Users sent");
 			break;
 		}
 	}

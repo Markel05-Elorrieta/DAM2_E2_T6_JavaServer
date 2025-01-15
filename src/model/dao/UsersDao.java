@@ -1,13 +1,11 @@
 package model.dao;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import model.Users;
 
-
-
-public class UsersDAO {
+public class UsersDao {
 	
 	public Users getUserById(String stID) {
 		int userID = Integer.parseInt(stID);

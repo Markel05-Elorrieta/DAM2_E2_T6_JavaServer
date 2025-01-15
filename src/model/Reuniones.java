@@ -1,5 +1,5 @@
 package model;
-// Generated 15 ene 2025, 12:00:33 by Hibernate Tools 6.5.1.Final
+// Generated 15 ene 2025, 15:03:00 by Hibernate Tools 6.5.1.Final
 
 import java.sql.Timestamp;
 
