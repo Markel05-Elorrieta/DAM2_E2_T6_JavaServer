@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import model.Users;
 import model.dao.*;
 
 public class DataThread extends Thread {
@@ -30,7 +32,7 @@ public class DataThread extends Thread {
 		String msg;
 		Object[] obj;
 	        try {
-				while ((msg = br.readLine()) != null) {
+				msg = br.readLine();
 					/*
 				    switch(msg) {
                     case "1":
@@ -56,7 +58,7 @@ public class DataThread extends Thread {
                     */
 					checkCommand(msg);
 					
-				}
+		
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -69,7 +71,7 @@ public class DataThread extends Thread {
 		switch (command[0]) {
 		case "user":
 			UsersDAO usersDao = new UsersDAO();
-			oos.writeObject((Object) usersDao.getUserById(command[1]));
+			oos.writeObject(usersDao.getUserById(command[1]));
 			break;
 		default:
 			UsersDAO usersDaoDefault = new UsersDAO();

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 15 ene 2025, 9:25:34 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 ene 2025, 12:00:33 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="elorbase" name="Users" optimistic-lock="none" table="users">
+    <class catalog="elorbase" name="model.Users" optimistic-lock="none" table="users">
         <id name="id" type="int">
             <column name="id"/>
             <generator class="assigned"/>
         </id>
-        <many-to-one class="Tipos" fetch="select" name="tipos">
+        <many-to-one class="model.Tipos" fetch="select" name="tipos">
             <column name="tipo_id" not-null="true"/>
         </many-to-one>
         <property name="email" type="string">
@@ -43,25 +43,25 @@
             <key>
                 <column name="alum_id" not-null="true"/>
             </key>
-            <one-to-many class="Matriculaciones"/>
+            <one-to-many class="model.Matriculaciones"/>
         </set>
         <set fetch="select" inverse="true" lazy="true" name="reunionesesForProfesorId" table="reuniones">
             <key>
                 <column name="profesor_id" not-null="true"/>
             </key>
-            <one-to-many class="Reuniones"/>
+            <one-to-many class="model.Reuniones"/>
         </set>
         <set fetch="select" inverse="true" lazy="true" name="reunionesesForAlumnoId" table="reuniones">
             <key>
                 <column name="alumno_id" not-null="true"/>
             </key>
-            <one-to-many class="Reuniones"/>
+            <one-to-many class="model.Reuniones"/>
         </set>
         <set fetch="select" inverse="true" lazy="true" name="horarioses" table="horarios">
             <key>
                 <column name="profe_id" not-null="true"/>
             </key>
-            <one-to-many class="Horarios"/>
+            <one-to-many class="model.Horarios"/>
         </set>
     </class>
 </hibernate-mapping>

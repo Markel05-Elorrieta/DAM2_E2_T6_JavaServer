@@ -12,9 +12,9 @@ public class UsersDAO {
 	public Users getUserById(String stID) {
 		int userID = Integer.parseInt(stID);
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Users as u where u.id = ?)";
+		String hql = "from Users as u where u.id = :id";
 		Query q = session.createQuery(hql);
-		q.setParameter(0, userID);
+		q.setParameter("id", userID);
 		Users user = (Users) q.uniqueResult();
 		System.out.println(user.toString());
 		session.close();

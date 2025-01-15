@@ -1,6 +1,5 @@
-// default package
 package model;
-// Generated 15 ene 2025, 9:25:34 by Hibernate Tools 6.5.1.Final
+// Generated 15 ene 2025, 12:00:33 by Hibernate Tools 6.5.1.Final
 
 import java.util.HashSet;
 import java.util.Set;

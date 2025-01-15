@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 15 ene 2025, 9:25:34 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 ene 2025, 12:00:33 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="elorbase" name="Horarios" optimistic-lock="none" table="horarios">
-        <composite-id class="HorariosId" name="id">
+    <class catalog="elorbase" name="model.Horarios" optimistic-lock="none" table="horarios">
+        <composite-id class="model.HorariosId" name="id">
             <key-property name="dia" type="string">
                 <column length="4" name="dia"/>
             </key-property>
@@ -16,10 +16,10 @@
                 <column name="profe_id"/>
             </key-property>
         </composite-id>
-        <many-to-one class="Users" fetch="select" insert="false" name="users" update="false">
+        <many-to-one class="model.Users" fetch="select" insert="false" name="users" update="false">
             <column name="profe_id" not-null="true"/>
         </many-to-one>
-        <many-to-one class="Modulos" fetch="select" insert="false" name="modulos" update="false">
+        <many-to-one class="model.Modulos" fetch="select" insert="false" name="modulos" update="false">
             <column name="modulo_id" not-null="true"/>
         </many-to-one>
     </class>

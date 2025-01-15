@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 15 ene 2025, 9:25:34 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15 ene 2025, 12:00:33 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class catalog="elorbase" name="Modulos" optimistic-lock="none" table="modulos">
+    <class catalog="elorbase" name="model.Modulos" optimistic-lock="none" table="modulos">
         <id name="id" type="int">
             <column name="id"/>
             <generator class="assigned"/>
         </id>
-        <many-to-one class="Ciclos" fetch="select" name="ciclos">
+        <many-to-one class="model.Ciclos" fetch="select" name="ciclos">
             <column name="ciclo_id"/>
         </many-to-one>
         <property name="nombre" type="string">
@@ -25,7 +25,7 @@
             <key>
                 <column name="modulo_id" not-null="true"/>
             </key>
-            <one-to-many class="Horarios"/>
+            <one-to-many class="model.Horarios"/>
         </set>
     </class>
 </hibernate-mapping>
