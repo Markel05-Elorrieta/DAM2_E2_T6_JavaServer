@@ -9,6 +9,8 @@ import java.util.Set;
  */
 public class Modulos implements java.io.Serializable {
 
+
+	private static final long serialVersionUID = -2025035749938028083L;
 	private int id;
 	private Ciclos ciclos;
 	private String nombre;

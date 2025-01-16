@@ -8,6 +8,10 @@ import java.sql.Date;
  */
 public class MatriculacionesId implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6344690919002216863L;
 	private int alumId;
 	private int cicloId;
 	private int curso;

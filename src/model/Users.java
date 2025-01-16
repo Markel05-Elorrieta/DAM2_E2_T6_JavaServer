@@ -9,8 +9,11 @@ import java.util.Set;
  */
 public class Users implements java.io.Serializable {
 	
-	private static final long serialVersionUID = 7839201L;
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -46535005703444963L;
 	private int id;
 	private Tipos tipos;
 	private String email;

@@ -9,6 +9,7 @@ import java.util.Set;
  */
 public class Ciclos implements java.io.Serializable {
 
+	private static final long serialVersionUID = 6448776979065012089L;
 	private int id;
 	private String nombre;
 	private Set matriculacioneses = new HashSet(0);
@@ -59,5 +60,11 @@ public class Ciclos implements java.io.Serializable {
 	public void setModuloses(Set moduloses) {
 		this.moduloses = moduloses;
 	}
+	
+	@Override
+	public String toString() {
+		return this.nombre;
+	}
+	
 
 }

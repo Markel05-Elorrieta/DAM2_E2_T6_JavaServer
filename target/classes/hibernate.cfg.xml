@@ -4,7 +4,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">jemsoftware1234</property>
-        <property name="hibernate.connection.url">jdbc:mysql://35.180.66.214:3306/elorbase</property>
+        <property name="hibernate.connection.url">jdbc:mysql://52.47.82.98:3306/elorbase</property>
         <property name="hibernate.connection.username">adminElorbase</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
