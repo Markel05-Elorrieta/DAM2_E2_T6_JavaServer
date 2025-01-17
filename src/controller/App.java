@@ -20,7 +20,9 @@ public class App {
 			Socket socket;
 			try {
 				socket = serverSocket.accept();
-				System.out.println("Connection established!" + socket.getInetAddress() + ":" + socket.getPort());
+				System.out.println("Connection established!");
+				System.out.println("Connected IP -> " + socket.getInetAddress());
+				System.out.println("Connected Port -> " + socket.getPort());
 				DataThread jasoHaria = new DataThread(socket);
 				jasoHaria.start();
 			} catch (IOException e) {

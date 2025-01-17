@@ -7,7 +7,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 
 import model.Users;
 import model.dao.*;
@@ -62,11 +66,18 @@ public class DataThread extends Thread {
 				usersDao = new UsersDao();
 				Users userJava = usersDao.checkLoginJava(command[1], command[2]);
 				oos.writeObject(userJava);
-				break;
+		        break;
 			case "loginAndroid":
 				usersDao = new UsersDao();
 				Users userAndroid = usersDao.checkLoginAndroid(command[1], command[2]);
-				oos.writeObject(userAndroid);
+				System.out.println(userAndroid);
+				break;
+			case "changePwd":
+				System.out.println(command[1]);
+				usersDao = new UsersDao();
+				Object existEmail = usersDao.changePwd(command[1]);
+				System.out.println(existEmail);
+				oos.writeObject(existEmail);
 				break;
 			case "scheduleTeacher":
 				horariosDao = new HorariosDao();

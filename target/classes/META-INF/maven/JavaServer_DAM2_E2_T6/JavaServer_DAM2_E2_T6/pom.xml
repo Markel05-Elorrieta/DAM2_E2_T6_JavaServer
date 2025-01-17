@@ -17,6 +17,11 @@
 			<version>6.6.4.Final</version> <!-- Use the version compatible with
 			your project -->
 		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
