@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 15 ene 2025, 15:03:00 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class catalog="elorbase" name="model.Horarios" optimistic-lock="none" table="horarios">
+        <composite-id class="model.HorariosId" name="id">
+            <key-property name="dia" type="string">
+                <column length="3" name="dia"/>
+            </key-property>
+            <key-property name="hora" type="char">
+                <column length="1" name="hora"/>
+            </key-property>
+            <key-property name="moduloId" type="int">
+                <column name="modulo_id"/>
+            </key-property>
+            <key-property name="profeId" type="int">
+                <column name="profe_id"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="model.Users" fetch="select" insert="false" name="users" update="false">
+            <column name="profe_id" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="model.Modulos" fetch="select" insert="false" name="modulos" update="false">
+            <column name="modulo_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
