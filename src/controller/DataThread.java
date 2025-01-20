@@ -63,30 +63,39 @@ public class DataThread extends Thread {
 		
 		switch (command[0]) {
 			case "loginJava":
+				System.out.println("Call -> loginJava");
 				usersDao = new UsersDao();
 				Users userJava = usersDao.checkLoginJava(command[1], command[2]);
+				System.out.println("Result -> " + userJava);
 				oos.writeObject(userJava);
 		        break;
 			case "loginAndroid":
+				System.out.println("Call -> loginAndroid");
 				usersDao = new UsersDao();
 				Users userAndroid = usersDao.checkLoginAndroid(command[1], command[2]);
-				System.out.println(userAndroid);
+				System.out.println("Result -> " + userAndroid);
+				oos.writeObject(userAndroid);
 				break;
 			case "changePwd":
-				System.out.println(command[1]);
+				System.out.println("Call -> changePwd");
 				usersDao = new UsersDao();
 				Object existEmail = usersDao.changePwd(command[1]);
-				System.out.println(existEmail);
+				System.out.println("Result -> " + existEmail);
 				oos.writeObject(existEmail);
 				break;
 			case "scheduleTeacher":
+				System.out.println("Call -> scheduleTeacher");
 				horariosDao = new HorariosDao();
-				oos.writeObject(horariosDao.getHorarioByTeacherId(command[1]));
-				System.out.println("writeaus");
+				Object horariosTeacher = horariosDao.getHorarioByTeacherId(command[1]);
+				oos.writeObject(horariosTeacher);
+				System.out.println("Result -> " + horariosTeacher);
 				break;
 			case "scheduleStudent":
+				System.out.println("Call -> scheduleStudent");
                 horariosDao = new HorariosDao();
-                oos.writeObject(horariosDao.getHorarioByStudentId(command[1]));
+                Object horariosStudent = horariosDao.getHorarioByStudentId(command[1]);
+                oos.writeObject(horariosStudent);
+                System.out.println("Result -> " + horariosStudent);
                 break;
 			case "testString":
 				pw.println("Test command");
