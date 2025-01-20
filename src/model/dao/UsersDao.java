@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import controller.EmailThread;
 import model.Users;
 import model.Utilities;
 
@@ -69,7 +70,7 @@ public class UsersDao {
 			q.executeUpdate();
 			session.getTransaction().commit();
 			session.close();
-			util.sendEmail(email, newPwd);
+			EmailThread emailThread = new EmailThread(email, newPwd);
 			return "1";
 		}
 	}

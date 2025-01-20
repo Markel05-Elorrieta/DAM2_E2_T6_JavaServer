@@ -23,8 +23,8 @@ public class App {
 				System.out.println("Connection established!");
 				System.out.println("Connected IP -> " + socket.getInetAddress());
 				System.out.println("Connected Port -> " + socket.getPort());
-				DataThread jasoHaria = new DataThread(socket);
-				jasoHaria.start();
+				DataThread dataThread = new DataThread(socket);
+				dataThread.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
