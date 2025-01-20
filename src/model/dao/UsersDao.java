@@ -90,4 +90,15 @@ public class UsersDao {
 		return true;
 	}
 	
+	public List<Users> getTeachers() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "from Users as u " 
+				   + "join fetch u.tipos as t " 
+			       + "where t.name = 'profesor'";
+		Query q = session.createQuery(hql);
+		List<Users> teachers = q.list();
+		session.close();
+		return teachers;
+	}
+	
 }
