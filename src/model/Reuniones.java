@@ -126,7 +126,7 @@ public class Reuniones implements java.io.Serializable {
 	public String toString() {
 		return "Reuniones [idReunion=" + idReunion + ", usersByProfesorId=" + usersByProfesorId + ", usersByAlumnoId="
 				+ usersByAlumnoId + ", estado=" + estado + ", estadoEus=" + estadoEus + ", idCentro=" + idCentro
-				+ ", titulo=" + titulo + ", asunto=" + asunto + ", aula=" + aula + ", fecha=" + fecha + "]";
+				+ ", titulo=" + titulo + ", asunto=" + asunto + ", aula=" + aula + ", fecha=" + fecha + "] \n";
 	}
 
 }

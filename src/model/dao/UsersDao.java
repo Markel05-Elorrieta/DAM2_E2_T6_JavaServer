@@ -118,4 +118,38 @@ public class UsersDao {
 	    return users;
 	}
 	
+	public List<Users> getFilteredUsers(Object userList, String ciclo, String curso){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "from Users as u " + "join fetch u.tipos as t " + "join fetch u.matriculacioneses as m "
+				+ "join fetch m.ciclos as c " + "join fetch c.moduloses as mo " + "join fetch mo.horarioses as h "
+				+ "where ";
+	 
+        if (userList instanceof List) {
+			List<String> users = (List<String>) userList;
+			for (int i = 0; i < users.size(); i++) {
+				if (i == 0) {
+					hql += "u.id = " + users.get(i);
+				} else {
+					hql += " or u.id = " + users.get(i);
+				}
+			}
+		} else {
+			hql += "u.id = " + userList;
+        }
+        
+        if (!ciclo.equals("0")) {
+        	hql += " and c.id = " + ciclo;
+        }
+		if (!curso.equals("0")) {
+			hql += " and c.curso = " + curso;
+		}
+		Query q = session.createQuery(hql);
+		List<Users> users = q.list();
+		session.close();
+		return users;
+    }
+	
+	
+	
+	
 }

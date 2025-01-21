@@ -92,5 +92,11 @@ public class Modulos implements java.io.Serializable {
 	public void setHorarioses(Set horarioses) {
 		this.horarioses = horarioses;
 	}
+	
+	@Override
+	public String toString() {
+		return "Modulos [id=" + id + ", ciclos=" + ciclos + ", nombre=" + nombre + ", nombreEus=" + nombreEus
+				+ ", horas=" + horas + ", curso=" + curso + "] \n";
+	}
 
 }

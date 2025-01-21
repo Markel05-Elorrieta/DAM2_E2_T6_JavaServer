@@ -65,5 +65,10 @@ public class Tipos implements java.io.Serializable {
 	public void setUserses(Set userses) {
 		this.userses = userses;
 	}
+	
+	@Override
+	public String toString() {
+		return "Tipos [id=" + id + ", name=" + name + ", nameEus=" + nameEus + "] \n";
+	}
 
 }

@@ -46,7 +46,7 @@ public class Horarios implements java.io.Serializable {
 	
 	@Override
 	public String toString() {
-		return "Horarios [id=" + id + ", users=" + users + ", modulos=" + modulos + "]";
+		return "Horarios [id=" + id + ", users=" + users + ", modulos=" + modulos + "] \n";
 	}
 
 }

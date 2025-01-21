@@ -19,9 +19,6 @@ public class HorariosDao {
         		   + "join fetch m.ciclos as c";
         Query q = session.createQuery(hql);
         java.util.List<Horarios> horarios = q.list();
-        for (Horarios horario : horarios) {
-            System.out.println(horario.toString());
-        }
         session.close();
         return horarios;
     }
@@ -37,9 +34,6 @@ public class HorariosDao {
 		Query q = session.createQuery(hql);
 		q.setParameter("id", id);
 		java.util.List<Horarios> horarios = q.list();
-		for (Horarios horario : horarios) {
-            System.out.println(horario.toString());
-        }
 		session.close();
 		return horarios;
 	}
@@ -56,9 +50,6 @@ public class HorariosDao {
         Query q = session.createQuery(hql);
         q.setParameter("id", id);
         java.util.List<Horarios> horarios = q.list();
-        for (Horarios horario : horarios) {
-            System.out.println(horario.toString());
-        }
         session.close();
         return horarios;
 	}

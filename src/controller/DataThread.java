@@ -61,6 +61,8 @@ public class DataThread extends Thread {
 		HorariosDao horariosDao;
 		MatriculacionesDao matriculacionesDao;
 		
+		Object usersByTeacher = null;
+		
 		switch (command[0]) {
 			case "loginJava":
 				System.out.println("Call -> loginJava");
@@ -107,9 +109,16 @@ public class DataThread extends Thread {
 			case "usersByTeacher":
 				System.out.println("Call -> usersByTeacher");
 				usersDao = new UsersDao();
-				Object usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
+				usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
 				oos.writeObject(usersByTeacher);
 				System.out.println("Result -> " + usersByTeacher);
+				break;
+			case "usersFiltered":
+				System.out.println("Call -> usersFiltered");
+				usersDao = new UsersDao();
+				Object usersFiltered = usersDao.getFilteredUsers(usersByTeacher, command[1], command[2]);
+				oos.writeObject(usersFiltered);
+				System.out.println("Result -> " + usersFiltered);
 				break;
 			case "testString":
 				pw.println("Test command");
