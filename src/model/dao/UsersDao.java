@@ -137,10 +137,10 @@ public class UsersDao {
 			hql += "u.id = " + userList;
         }
         
-        if (!ciclo.equals("0")) {
+        if (!ciclo.equals("")) {
         	hql += " and c.id = " + ciclo;
         }
-		if (!curso.equals("0")) {
+		if (!curso.equals("")) {
 			hql += " and c.curso = " + curso;
 		}
 		Query q = session.createQuery(hql);
