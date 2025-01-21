@@ -102,4 +102,20 @@ public class UsersDao {
 		return teachers;
 	}
 	
+	public List<Users> getUsersByTeacherId(String id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    String hql = "from Users as u " +
+	                "join fetch u.tipos as t " +
+	                "join fetch u.matriculacioneses as m " +
+	                "join fetch m.ciclos as c " +
+	                "join fetch c.moduloses as mo " +
+	                "join fetch mo.horarioses as h " +
+	                "where h.users.id = :id";
+	    Query q = session.createQuery(hql);
+	    q.setParameter("id", Integer.parseInt(id));
+	    List<Users> users = q.list();
+	    session.close();
+	    return users;
+	}
+	
 }

@@ -104,6 +104,13 @@ public class DataThread extends Thread {
 				oos.writeObject(teachers);
 				System.out.println("Result -> " + teachers);
 				break;
+			case "usersByTeacher":
+				System.out.println("Call -> usersByTeacher");
+				usersDao = new UsersDao();
+				Object usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
+				oos.writeObject(usersByTeacher);
+				System.out.println("Result -> " + usersByTeacher);
+				break;
 			case "testString":
 				pw.println("Test command");
 				break;
