@@ -3,12 +3,14 @@ package controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -22,6 +24,7 @@ public class DataThread extends Thread {
 	private ObjectOutputStream oos;
 	private BufferedReader br;
 	private PrintWriter pw;
+	private Logger logger;
 	
 	public DataThread(Socket socket) {
 		this.socket = socket;
@@ -31,8 +34,11 @@ public class DataThread extends Thread {
 			this.br = new BufferedReader(isr);
 			this.oos = new ObjectOutputStream(socket.getOutputStream());
 			this.pw = new PrintWriter(socket.getOutputStream(), true);
+			logger = Logger.getLogger("DataThread");
+			logger.info("DataThread created");
 			
 		} catch (IOException e) {
+			System.out.println("a cascau q flipas");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -43,7 +49,13 @@ public class DataThread extends Thread {
 		String msg;
 	        try {
 				msg = br.readLine();
-				checkCommand(msg);
+				try {
+					checkCommand(msg);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -51,7 +63,7 @@ public class DataThread extends Thread {
 			}
 	}
 	
-	private void checkCommand(String query) throws IOException {
+	private void checkCommand(String query) throws IOException, ClassNotFoundException {
 		String[] command = query.split("/");
 		UsersDao usersDao;
 		TiposDao tiposDao;
@@ -61,14 +73,12 @@ public class DataThread extends Thread {
 		HorariosDao horariosDao;
 		MatriculacionesDao matriculacionesDao;
 		
-		Object usersByTeacher = null;
-		
 		switch (command[0]) {
 			case "loginJava":
-				System.out.println("Call -> loginJava");
+				logger.info("Call -> loginJava");
 				usersDao = new UsersDao();
 				Users userJava = usersDao.checkLoginJava(command[1], command[2]);
-				System.out.println("Result -> " + userJava);
+				logger.info("Result -> " + userJava);
 				oos.writeObject(userJava);
 		        break;
 			case "loginAndroid":
@@ -109,14 +119,14 @@ public class DataThread extends Thread {
 			case "usersByTeacher":
 				System.out.println("Call -> usersByTeacher");
 				usersDao = new UsersDao();
-				usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
+				Object usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
 				oos.writeObject(usersByTeacher);
 				System.out.println("Result -> " + usersByTeacher);
 				break;
 			case "usersFiltered":
 				System.out.println("Call -> usersFiltered");
 				usersDao = new UsersDao();
-				Object usersFiltered = usersDao.getFilteredUsers(usersByTeacher, command[1], command[2]);
+				Object usersFiltered = usersDao.getFilteredUsers(command[1], command[2]);
 				oos.writeObject(usersFiltered);
 				System.out.println("Result -> " + usersFiltered);
 				break;

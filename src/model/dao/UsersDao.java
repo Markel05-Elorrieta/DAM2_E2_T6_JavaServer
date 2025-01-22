@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -10,6 +11,8 @@ import model.Users;
 import model.Utilities;
 
 public class UsersDao {
+	
+	private static List<Users> userList = null;
 
 	public List<Users> getUsers() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -115,39 +118,60 @@ public class UsersDao {
 	    q.setParameter("id", Integer.parseInt(id));
 	    List<Users> users = q.list();
 	    session.close();
+	    userList = users;
 	    return users;
 	}
 	
-	public List<Users> getFilteredUsers(Object userList, String ciclo, String curso){
+	public List<Users> getFilteredUsers(String ciclo, String curso){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		String hql = "from Users as u " + "join fetch u.tipos as t " + "join fetch u.matriculacioneses as m "
-				+ "join fetch m.ciclos as c " + "join fetch c.moduloses as mo " + "join fetch mo.horarioses as h "
-				+ "where ";
-	 
-        if (userList instanceof List) {
-			List<String> users = (List<String>) userList;
-			for (int i = 0; i < users.size(); i++) {
-				if (i == 0) {
-					hql += "u.id = " + users.get(i);
-				} else {
-					hql += " or u.id = " + users.get(i);
-				}
-			}
-		} else {
-			hql += "u.id = " + userList;
+		System.out.println("userList: " + userList);
+		System.out.println("ciclo: " + ciclo);
+		System.out.println("curso: " + curso);
+		String hql = "from Users as u " + 
+					 "join fetch u.tipos as t " + 
+					 "join fetch u.matriculacioneses as m " +
+					 "join fetch m.id as mi " +
+					 "join fetch m.ciclos as c " +
+					 "join fetch c.moduloses as mo " + 
+					 "join fetch mo.horarioses as h ";
+		
+		if (!ciclo.equals("0") && !curso.equals("0")) {
+			hql += " where c.nombre = :ciclo and mi.curso = :curso";
+		} else if (!ciclo.equals("0")) {
+			hql += " where c.nombre = :ciclo";
+        } else if (!curso.equals("0")) {
+            hql += "where mi.curso = :curso";
         }
-        
-        if (!ciclo.equals("")) {
-        	hql += " and c.id = " + ciclo;
-        }
-		if (!curso.equals("")) {
-			hql += " and c.curso = " + curso;
-		}
+		
 		Query q = session.createQuery(hql);
+		
+		if (!ciclo.equals("0") && !curso.equals("0")) {
+			q.setParameter("ciclo", ciclo);
+			q.setParameter("curso", curso);
+		} else if (!ciclo.equals("0")) {
+			q.setParameter("ciclo", ciclo);
+		} else if (!curso.equals("0")) {
+			q.setParameter("curso", curso);
+		}
+		
 		List<Users> users = q.list();
 		session.close();
-		return users;
+		
+		List<Users> ret = compareLists(users, userList);
+	    return ret;
     }
+	
+	private List<Users> compareLists(List<Users> list1, List<Users> list2) {
+		List<Users> ret = new ArrayList<Users>();
+		for (Users user : list1) {
+			for (Users user2 : list2) {
+				if (user.getId() == user2.getId()) {
+					ret.add(user);
+				}
+			}
+		}
+		return ret;
+	}
 	
 	
 	
