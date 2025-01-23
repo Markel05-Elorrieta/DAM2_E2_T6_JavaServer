@@ -130,6 +130,13 @@ public class DataThread extends Thread {
 				oos.writeObject(usersFiltered);
 				System.out.println("Result -> " + usersFiltered);
 				break;
+			case "matriculacionesUser":
+			    System.out.println("Call -> matriculacionesUser");
+			    matriculacionesDao = new MatriculacionesDao();
+			    Object matriculaciones = matriculacionesDao.getMatriculacionesByUser(command[1]);
+			    oos.writeObject(matriculaciones);
+			    System.out.println("Result -> " + matriculaciones);
+			    break;
 			case "testString":
 				pw.println("Test command");
 				break;

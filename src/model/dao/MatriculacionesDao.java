@@ -39,4 +39,19 @@ public class MatriculacionesDao {
         session.close();
         return matriculaciones;
 	}
+	
+	public Matriculaciones getMatriculacionesByUser(String id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from Matriculaciones as m "
+                   + "join fetch m.users as u "
+                   + "join fetch u.tipos as t "
+                   + "join fetch m.ciclos as c "
+               + "join fetch m.id as mi "
+               + "where mi.alumId = :id";
+        Query q = session.createQuery(hql);
+    q.setParameter("id", Integer.parseInt(id));
+        Matriculaciones matriculaciones = (Matriculaciones) q.uniqueResult();
+        session.close();
+        return matriculaciones;
+    }
 }
