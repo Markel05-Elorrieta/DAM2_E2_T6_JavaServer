@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,6 +21,7 @@ import model.dao.*;
 
 public class DataThread extends Thread {
 	private Socket socket;
+	private InputStream is;
 	private InputStreamReader isr;
 	private ObjectOutputStream oos;
 	private BufferedReader br;
@@ -29,16 +31,24 @@ public class DataThread extends Thread {
 	public DataThread(Socket socket) {
 		this.socket = socket;
 		try {
-			
-			this.isr = new InputStreamReader(socket.getInputStream());
-			this.br = new BufferedReader(isr);
-			this.oos = new ObjectOutputStream(socket.getOutputStream());
-			this.pw = new PrintWriter(socket.getOutputStream(), true);
+	        // Initialize InputStream and OutputStream
+	        // Initialize InputStream and OutputStream for plain text
+	        this.is = socket.getInputStream();
+	        this.isr = new InputStreamReader(is);
+	        this.br = new BufferedReader(isr);
+
+	        // Initialize OutputStream for plain text
+	        this.pw = new PrintWriter(socket.getOutputStream(), true);
+
+	        // Initialize ObjectOutputStream
+	        this.oos = new ObjectOutputStream(socket.getOutputStream());
+	        
 			logger = Logger.getLogger("DataThread");
 			logger.info("DataThread created");
+			// logger.setLevel();
 			
 		} catch (IOException e) {
-			System.out.println("a cascau q flipas");
+			// logger.severe("Error creating DataThread");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -49,22 +59,25 @@ public class DataThread extends Thread {
 		String msg;
 	        try {
 				msg = br.readLine();
+				System.out.println("Message received: " + msg);
 				try {
 					checkCommand(msg);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
+					logger.severe("Error checking command");
 					e.printStackTrace();
+			
 				}
-				
-
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				logger.severe("Error reading message");
 				e.printStackTrace();
 			}
 	}
 	
 	private void checkCommand(String query) throws IOException, ClassNotFoundException {
 		String[] command = query.split("/");
+		
 		UsersDao usersDao;
 		TiposDao tiposDao;
 		ReunionesDao reunionesDao;
@@ -82,61 +95,73 @@ public class DataThread extends Thread {
 				oos.writeObject(userJava);
 		        break;
 			case "loginAndroid":
-				System.out.println("Call -> loginAndroid");
+				logger.info("Call -> LoginAndroid");
 				usersDao = new UsersDao();
 				Users userAndroid = usersDao.checkLoginAndroid(command[1]);
-				System.out.println("Result -> " + userAndroid);
+				logger.info("Result -> " + userAndroid);
+				System.out.println(userAndroid.getArgazkia());
 				oos.writeObject(userAndroid);
 				break;
 			case "changePwd":
-				System.out.println("Call -> changePwd");
+				logger.info("Call -> changePwd");
 				usersDao = new UsersDao();
 				Object existEmail = usersDao.changePwd(command[1]);
-				System.out.println("Result -> " + existEmail);
+				logger.info("Result -> " + existEmail);
 				oos.writeObject(existEmail);
 				break;
 			case "scheduleTeacher":
-				System.out.println("Call -> scheduleTeacher");
+				logger.info("Call -> scheduleTeacher");
 				horariosDao = new HorariosDao();
 				Object horariosTeacher = horariosDao.getHorarioByTeacherId(command[1]);
 				oos.writeObject(horariosTeacher);
-				System.out.println("Result -> " + horariosTeacher);
+				logger.info("Result -> " + horariosTeacher);
 				break;
 			case "scheduleStudent":
-				System.out.println("Call -> scheduleStudent");
+				logger.info("Call -> scheduleStudent");
                 horariosDao = new HorariosDao();
                 Object horariosStudent = horariosDao.getHorarioByStudentId(command[1]);
                 oos.writeObject(horariosStudent);
-                System.out.println("Result -> " + horariosStudent);
+                logger.info("Result -> " + horariosStudent);
                 break;
 			case "getTeachers":
-				System.out.println("Call -> getTeachers");
+				logger.info("Call -> getTeachers");
 				usersDao = new UsersDao();
 				Object teachers = usersDao.getTeachers();
 				oos.writeObject(teachers);
-				System.out.println("Result -> " + teachers);
+				logger.info("Result -> " + teachers);
 				break;
 			case "usersByTeacher":
-				System.out.println("Call -> usersByTeacher");
+				logger.info("Call -> usersByTeacher");
 				usersDao = new UsersDao();
 				Object usersByTeacher = usersDao.getUsersByTeacherId(command[1]);
 				oos.writeObject(usersByTeacher);
-				System.out.println("Result -> " + usersByTeacher);
+				logger.info("Result -> " + usersByTeacher);
 				break;
 			case "usersFiltered":
-				System.out.println("Call -> usersFiltered");
+				logger.info("Call -> usersFiltered");
 				usersDao = new UsersDao();
 				Object usersFiltered = usersDao.getFilteredUsers(command[1], command[2]);
 				oos.writeObject(usersFiltered);
-				System.out.println("Result -> " + usersFiltered);
+				logger.info("Result -> " + usersFiltered);
 				break;
 			case "matriculacionesUser":
-			    System.out.println("Call -> matriculacionesUser");
+			    logger.info("Call -> matriculacionesUser");
 			    matriculacionesDao = new MatriculacionesDao();
 			    Object matriculaciones = matriculacionesDao.getMatriculacionesByUser(command[1]);
 			    oos.writeObject(matriculaciones);
-			    System.out.println("Result -> " + matriculaciones);
+			    logger.info("Result -> " + matriculaciones);
 			    break;
+			case "updateUser":
+				logger.info("Call -> updateUser");
+				String blob = command[2];
+				for (int i = 3; i < command.length; i++) {
+					blob += "/" + command[i];
+				}
+				usersDao = new UsersDao();
+				Object updatedUser = usersDao.setUserPicture(command[1], blob);
+				logger.info("Result -> " + updatedUser);
+				oos.writeObject(updatedUser);
+				break;
 			case "testString":
 				pw.println("Test command");
 				break;

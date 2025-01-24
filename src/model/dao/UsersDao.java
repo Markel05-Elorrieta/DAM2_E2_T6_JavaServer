@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import controller.EmailThread;
-import model.MBCrypt;
 import model.Users;
 import model.Utilities;
 
@@ -61,10 +60,11 @@ public class UsersDao {
 		}else {
 			Utilities util = new Utilities();
 			String newPwd = util.generatePassword();
+			String hashedNewPwd = util.hashPassword(newPwd);
 			Session session = HibernateUtil.getSessionFactory().openSession();
 			String hql = "update Users set password = :newPwd where email = :email";
 			Query q = session.createQuery(hql);
-			q.setParameter("newPwd", newPwd);
+			q.setParameter("newPwd", hashedNewPwd);
 			q.setParameter("email", email);
 			session.beginTransaction();
 			q.executeUpdate();
@@ -168,6 +168,22 @@ public class UsersDao {
 			}
 		}
 		return ret;
+	}
+	
+	public String setUserPicture(String id, String UserPicture) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Utilities util = new Utilities();
+        String hql = "update Users "
+        		   + "set argazkia = :blob "
+        		   + "where id = :id";
+        Query q = session.createQuery(hql);
+        q.setParameter("blob", util.stringToByte(UserPicture) );
+        q.setParameter("id", Integer.parseInt(id));
+        session.beginTransaction();
+        q.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+        return "1";
 	}
 	
 	

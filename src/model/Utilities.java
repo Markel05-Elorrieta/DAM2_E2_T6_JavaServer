@@ -6,6 +6,8 @@ import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import global.Constants;
 
 public class Utilities {
@@ -22,6 +24,23 @@ public class Utilities {
 		}
 
 		return password;
+	}
+	
+	public String hashPassword(String password) {
+		String hashedPwd = BCrypt.hashpw(password, BCrypt.gensalt());
+		return hashedPwd;
+	}
+	
+	public boolean checkPassword(String password, String hashedPwd) {
+		boolean passwordMatch = BCrypt.checkpw(password, hashedPwd);
+		return passwordMatch;
+	}
+	
+	public byte[] stringToByte(String text) {
+		System.out.println(text);
+		byte[] bytes = text.getBytes();
+		System.out.println(bytes);
+		return bytes;
 	}
 	
 	public void sendEmail(String email, String newPwd) {
@@ -117,4 +136,6 @@ public class Utilities {
 				+ "</body>";
 		return ret;
 	}
+	
+
 }
