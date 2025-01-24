@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import controller.EmailThread;
+import model.MBCrypt;
 import model.Users;
 import model.Utilities;
 
@@ -27,31 +28,27 @@ public class UsersDao {
         return users;
 	}
 	
-	public Users checkLoginAndroid(String email, String password) {
+	public Users checkLoginAndroid(String email) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		String hql = "from Users as u "
 				    + "join fetch u.tipos as t "
 					+ "where u.email = :email and "
-					+ "u.password = :password and "
 		            + "(u.tipos.name = 'profesor' or u.tipos.name = 'alumno')";
 		Query q = session.createQuery(hql);
 		q.setParameter("email", email);
-		q.setParameter("password", password);
 		Users user = (Users) q.uniqueResult();
 		session.close();
 		return user;
 	}
 	
-	public Users checkLoginJava(String email, String password) {
+	public Users checkLoginJava(String email) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		String hql = "from Users as u "
 					+ "join fetch u.tipos as t "
 					+ "where u.email = :email and "
-					+ "u.password = :password and "
 					+ "u.tipos.name = 'profesor'";
 		Query q = session.createQuery(hql);
 		q.setParameter("email", email);
-		q.setParameter("password", password);
 		Users user = (Users) q.uniqueResult();
 		session.close();
 		return user;

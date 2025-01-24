@@ -77,14 +77,14 @@ public class DataThread extends Thread {
 			case "loginJava":
 				logger.info("Call -> loginJava");
 				usersDao = new UsersDao();
-				Users userJava = usersDao.checkLoginJava(command[1], command[2]);
+				Users userJava = usersDao.checkLoginJava(command[1]);
 				logger.info("Result -> " + userJava);
 				oos.writeObject(userJava);
 		        break;
 			case "loginAndroid":
 				System.out.println("Call -> loginAndroid");
 				usersDao = new UsersDao();
-				Users userAndroid = usersDao.checkLoginAndroid(command[1], command[2]);
+				Users userAndroid = usersDao.checkLoginAndroid(command[1]);
 				System.out.println("Result -> " + userAndroid);
 				oos.writeObject(userAndroid);
 				break;
@@ -142,7 +142,7 @@ public class DataThread extends Thread {
 				break;
 			case "testUser":
 				usersDao = new UsersDao();
-				Users testUser = usersDao.checkLoginJava("maitane@elorrieta-errekamari.com", "1234");
+				Users testUser = usersDao.checkLoginJava("m");
 				oos.writeObject(testUser);
 				break;
 			default:
