@@ -99,6 +99,9 @@ public class UsersDao {
 		Query q = session.createQuery(hql);
 		List<Users> teachers = q.list();
 		session.close();
+		for (int i = 0; i < teachers.size(); i++) {
+            teachers.get(i).setArgazkia(null);
+		}
 		return teachers;
 	}
 	
@@ -115,6 +118,9 @@ public class UsersDao {
 	    q.setParameter("id", Integer.parseInt(id));
 	    List<Users> users = q.list();
 	    session.close();
+	    for (int i = 0; i < users.size(); i++) {
+            users.get(i).setArgazkia(null);
+	    }
 	    userList = users;
 	    return users;
 	}
@@ -155,6 +161,9 @@ public class UsersDao {
 		session.close();
 		
 		List<Users> ret = compareLists(users, userList);
+		for (int i = 0; i < ret.size(); i++) {
+			ret.get(i).setArgazkia(null);
+		}
 	    return ret;
     }
 	

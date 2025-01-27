@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -161,6 +162,13 @@ public class DataThread extends Thread {
 				Object updatedUser = usersDao.setUserPicture(command[1], blob);
 				logger.info("Result -> " + updatedUser);
 				oos.writeObject(updatedUser);
+				break;
+			case "bilerakByTeacher" :
+				logger.info("Call -> bilerakByTeacher");
+				reunionesDao = new ReunionesDao();
+				Object bilerakByTeacher = reunionesDao.getReunionesByTeacher(command[1]);
+				oos.writeObject(bilerakByTeacher);
+				logger.info("Result -> " + bilerakByTeacher);
 				break;
 			case "testString":
 				pw.println("Test command");
