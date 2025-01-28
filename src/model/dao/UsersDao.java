@@ -125,6 +125,25 @@ public class UsersDao {
 	    return users;
 	}
 	
+	public List<Users> getTeachersByUserId(String id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "from Users as u " + 
+					 "join fetch u.tipos as t " + 
+					 "join fetch u.matriculacioneses as m " +
+					 "join fetch m.ciclos as c " + 
+					 "join fetch c.moduloses as mo " + 
+					 "join fetch mo.horarioses as h " +
+					 "where m.users.id = :id";
+		Query q = session.createQuery(hql);
+		q.setParameter("id", Integer.parseInt(id));
+		List<Users> teachers = q.list();
+		session.close();
+		for (int i = 0; i < teachers.size(); i++) {
+			teachers.get(i).setArgazkia(null);
+		}
+		return teachers;
+	}
+	
 	public List<Users> getFilteredUsers(String ciclo, String curso){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		System.out.println("userList: " + userList);

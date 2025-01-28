@@ -12,12 +12,15 @@ import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 
+import model.Ikastetxeak;
 import model.Users;
+import model.Utilities;
 import model.dao.*;
 
 public class DataThread extends Thread {
@@ -45,13 +48,11 @@ public class DataThread extends Thread {
 	        this.oos = new ObjectOutputStream(socket.getOutputStream());
 	        
 			logger = Logger.getLogger("DataThread");
-			logger.info("DataThread created");
-			// logger.setLevel();
+			logger.severe("DataThread created");
+			logger.setLevel(Level.INFO);
 			
 		} catch (IOException e) {
-			// logger.severe("Error creating DataThread");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.severe("Error creating DataThread" + e.getMessage());
 		}
 	}
 
@@ -71,7 +72,7 @@ public class DataThread extends Thread {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				logger.severe("Error reading message");
+				logger.severe("Error reading message" + e.getMessage());
 				e.printStackTrace();
 			}
 	}
@@ -86,6 +87,7 @@ public class DataThread extends Thread {
 		ModulosDao modulosDao;
 		HorariosDao horariosDao;
 		MatriculacionesDao matriculacionesDao;
+		IkastetxeakDao ikastetxeakDao;
 		
 		switch (command[0]) {
 			case "loginJava":
@@ -138,6 +140,13 @@ public class DataThread extends Thread {
 				oos.writeObject(usersByTeacher);
 				logger.info("Result -> " + usersByTeacher);
 				break;
+			case "teachersByUser":
+				logger.info("Call -> teachersByUser");
+				usersDao = new UsersDao();
+				Object teachersByUser = usersDao.getTeachersByUserId(command[1]);
+				oos.writeObject(teachersByUser);
+				logger.info("Result -> " + teachersByUser);
+				break;
 			case "usersFiltered":
 				logger.info("Call -> usersFiltered");
 				usersDao = new UsersDao();
@@ -169,6 +178,24 @@ public class DataThread extends Thread {
 				Object bilerakByTeacher = reunionesDao.getReunionesByTeacher(command[1]);
 				oos.writeObject(bilerakByTeacher);
 				logger.info("Result -> " + bilerakByTeacher);
+				break;
+			case "bilerakByStudent" :
+				logger.info("Call -> bilerakByStudent");
+				reunionesDao = new ReunionesDao();
+				Object bilerakByStudent = reunionesDao.getReunionesByStudent(command[1]);
+				oos.writeObject(bilerakByStudent);
+				logger.info("Result -> " + bilerakByStudent);
+				break;
+			case "getIkastetxeak":
+				logger.info("Call -> getIkastetxeak");
+				ikastetxeakDao = new IkastetxeakDao();
+				Object ikastetxeak = ikastetxeakDao.getIkastetxeak();
+				Utilities u = new Utilities();
+				//u.splitArray((List<Ikastetxeak>) ikastetxeak, 10);
+				
+				oos.writeObject(ikastetxeak);
+				oos.flush();
+				logger.info("Result -> " + ikastetxeak);
 				break;
 			case "testString":
 				pw.println("Test command");
