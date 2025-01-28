@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +38,7 @@ public class DataThread extends Thread {
 		try {
 	        // Initialize InputStream and OutputStream
 	        // Initialize InputStream and OutputStream for plain text
+			socket.setSendBufferSize(1024*1024);
 	        this.is = socket.getInputStream();
 	        this.isr = new InputStreamReader(is);
 	        this.br = new BufferedReader(isr);
@@ -189,10 +191,9 @@ public class DataThread extends Thread {
 			case "getIkastetxeak":
 				logger.info("Call -> getIkastetxeak");
 				ikastetxeakDao = new IkastetxeakDao();
-				Object ikastetxeak = ikastetxeakDao.getIkastetxeak();
-				Utilities u = new Utilities();
-				//u.splitArray((List<Ikastetxeak>) ikastetxeak, 10);
-				
+				ArrayList<Ikastetxeak> ikastetxeak = (ArrayList<Ikastetxeak>) ikastetxeakDao.getIkastetxeak();
+
+				System.out.println(ikastetxeak);
 				oos.writeObject(ikastetxeak);
 				oos.flush();
 				logger.info("Result -> " + ikastetxeak);
