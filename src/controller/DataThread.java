@@ -104,7 +104,6 @@ public class DataThread extends Thread {
 				usersDao = new UsersDao();
 				Users userAndroid = usersDao.checkLoginAndroid(command[1]);
 				logger.info("Result -> " + userAndroid);
-				System.out.println(userAndroid.getArgazkia());
 				oos.writeObject(userAndroid);
 				break;
 			case "changePwd":
@@ -191,11 +190,8 @@ public class DataThread extends Thread {
 			case "getIkastetxeak":
 				logger.info("Call -> getIkastetxeak");
 				ikastetxeakDao = new IkastetxeakDao();
-				ArrayList<Ikastetxeak> ikastetxeak = (ArrayList<Ikastetxeak>) ikastetxeakDao.getIkastetxeak();
-
-				System.out.println(ikastetxeak);
+				List<Ikastetxeak> ikastetxeak = ikastetxeakDao.getIkastetxeak();
 				oos.writeObject(ikastetxeak);
-				oos.flush();
 				logger.info("Result -> " + ikastetxeak);
 				break;
 			case "testString":

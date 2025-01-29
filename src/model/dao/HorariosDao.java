@@ -42,12 +42,13 @@ public class HorariosDao {
     public List<Horarios> getHorarioByStudentId(String id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = "from Horarios as h "
-                   + "join fetch h.modulos as m "
-                   + "join fetch h.users as u "
-                   + "join fetch u.tipos as t "
-                   + "join fetch m.ciclos as c "
-                   + "join fetch c.matriculacioneses as mat "
-                   + "where mat.id.alumId = :id";
+                + "join fetch h.modulos as m "
+                + "join fetch h.users as u "
+                + "join fetch u.tipos as t "
+                + "join fetch m.ciclos as c "
+                + "join fetch c.matriculacioneses as mat "
+                + "where mat.id.alumId = :id "
+                + "and m.nombre not in ('Tutoria', 'Guardia')";
         Query<Horarios> q = session.createQuery(hql, Horarios.class);
         q.setParameter("id", id);
         List<Horarios> horarios = q.list();
