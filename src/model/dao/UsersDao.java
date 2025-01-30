@@ -214,6 +214,16 @@ public class UsersDao {
         return "1";
 	}
 	
+	public Users getUserById(String id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		String hql = "from Users as u " + "join fetch u.tipos as t " + "where u.id = :id";
+		Query q = session.createQuery(hql);
+		q.setParameter("id", Integer.parseInt(id));
+		Users user = (Users) q.uniqueResult();
+		session.close();
+		return user;
+	}
+	
 	
 	
 	

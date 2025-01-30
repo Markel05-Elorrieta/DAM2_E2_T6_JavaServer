@@ -49,4 +49,14 @@ public class ReunionesDao {
         session.close();
         return reuniones;
 	}
+	
+	public Reuniones insertReunion(Reuniones reunion) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        int id = (int)session.save(reunion);
+        session.getTransaction().commit();
+        session.close();
+        reunion.setIdReunion(id);
+        return reunion;
+	}
 }

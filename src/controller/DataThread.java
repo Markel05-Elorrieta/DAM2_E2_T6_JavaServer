@@ -20,6 +20,7 @@ import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 
 import model.Ikastetxeak;
+import model.Reuniones;
 import model.Users;
 import model.Utilities;
 import model.dao.*;
@@ -51,7 +52,7 @@ public class DataThread extends Thread {
 	        
 			logger = Logger.getLogger("DataThread");
 			logger.severe("DataThread created");
-			logger.setLevel(Level.INFO);
+			logger.setLevel(Level.ALL);
 			
 		} catch (IOException e) {
 			logger.severe("Error creating DataThread" + e.getMessage());
@@ -181,11 +182,11 @@ public class DataThread extends Thread {
 				logger.info("Result -> " + bilerakByTeacher);
 				break;
 			case "bilerakByStudent" :
-				logger.info("Call -> bilerakByStudent");
+				logger.severe("Call -> bilerakByStudent");
 				reunionesDao = new ReunionesDao();
 				Object bilerakByStudent = reunionesDao.getReunionesByStudent(command[1]);
 				oos.writeObject(bilerakByStudent);
-				logger.info("Result -> " + bilerakByStudent);
+				logger.severe("Result -> " + bilerakByStudent);
 				break;
 			case "getIkastetxeak":
 				logger.info("Call -> getIkastetxeak");
@@ -193,6 +194,38 @@ public class DataThread extends Thread {
 				List<Ikastetxeak> ikastetxeak = ikastetxeakDao.getIkastetxeak();
 				oos.writeObject(ikastetxeak);
 				logger.info("Result -> " + ikastetxeak);
+				break;
+			case "newBilera":
+				logger.info("Call -> newBilera");
+				reunionesDao = new ReunionesDao();
+				/*
+				 * command[1] -> teacherId 
+				 * command[2] -> alumnoId 
+				 * command[3] -> estado
+				 * command[4] -> IkastetxeId
+				 * command[5] -> Title
+				 * command[6] -> asunto
+				 * command[7] -> aula
+				 * command[8] -> fecha
+				 */
+				usersDao = new UsersDao();
+				Utilities utilities = new Utilities();
+				
+				Reuniones r = new Reuniones(
+								  usersDao.getUserById(command[1]),
+								  usersDao.getUserById(command[2]),
+								  command[3],
+								  null,
+								  command[4],
+								  command[5],
+								  command[6],
+								  command[7],
+								  utilities.stringToTimestamp(command[8])
+								);
+				
+				Reuniones newBilera = reunionesDao.insertReunion(r);
+				oos.writeObject(newBilera);
+				logger.info("Result -> " + newBilera);
 				break;
 			case "testString":
 				pw.println("Test command");

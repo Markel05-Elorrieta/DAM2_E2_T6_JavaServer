@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -41,6 +42,11 @@ public class Utilities {
 		byte[] bytes = text.getBytes();
 		System.out.println(bytes);
 		return bytes;
+	}
+	
+	public Timestamp stringToTimestamp(String text) {
+		Timestamp timestamp = Timestamp.valueOf(text);
+		return timestamp;
 	}
 	
 	public void sendEmail(String email, String newPwd) {
