@@ -59,4 +59,25 @@ public class ReunionesDao {
         reunion.setIdReunion(id);
         return reunion;
 	}
+	
+	public void acceptReunion(String id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		Reuniones reunion = session.get(Reuniones.class, Integer.parseInt(id));
+		reunion.setEstado("aceptada");
+		session.update(reunion);
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	public void declineReunion(String id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();
+		Reuniones reunion = session.get(Reuniones.class, Integer.parseInt(id));
+		reunion.setEstado("denegada");
+		session.update(reunion);
+		session.getTransaction().commit();
+		session.close();
+	}
+
 }

@@ -52,7 +52,7 @@ public class DataThread extends Thread {
 	        
 			logger = Logger.getLogger("DataThread");
 			logger.severe("DataThread created");
-			logger.setLevel(Level.ALL);
+			logger.setLevel(Level.INFO);
 			
 		} catch (IOException e) {
 			logger.severe("Error creating DataThread" + e.getMessage());
@@ -226,6 +226,18 @@ public class DataThread extends Thread {
 				Reuniones newBilera = reunionesDao.insertReunion(r);
 				oos.writeObject(newBilera);
 				logger.info("Result -> " + newBilera);
+				break;
+			case "acceptBilera":
+				logger.info("Call -> acceptBilera");
+				reunionesDao = new ReunionesDao();
+				reunionesDao.acceptReunion(command[1]);
+				logger.info("Result -> " + "Bilera id " + command[1] + " accepted");
+				break;
+			case "declineBilera":
+				logger.info("Call -> declineBilera");
+				reunionesDao = new ReunionesDao();
+				reunionesDao.declineReunion(command[1]);
+				logger.info("Result -> " + "Bilera id " + command[1] + " declined");
 				break;
 			case "testString":
 				pw.println("Test command");
