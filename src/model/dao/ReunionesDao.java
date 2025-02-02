@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import controller.EmailThread;
 import model.Reuniones;
 
 public class ReunionesDao {
@@ -54,13 +55,25 @@ public class ReunionesDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         int id = (int)session.save(reunion);
-        session.getTransaction().commit();
+        session.getTransaction().commit();   
         session.close();
-        reunion.setIdReunion(id);
-        return reunion;
+        
+        session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from Reuniones as r " +
+                "join fetch r.usersByProfesorId as up " +
+                "join fetch r.usersByAlumnoId as ua " +
+                "join fetch up.tipos as tp " +
+                "join fetch ua.tipos as ta " +
+                "where r.idReunion = :id";	
+		Query q = session.createQuery(hql);
+		q.setParameter("id", id);
+		Reuniones reuniones = (Reuniones) q.uniqueResult();
+		session.close();
+		
+        return reuniones;
 	}
 	
-	public void acceptReunion(String id) {
+	public Reuniones acceptReunion(String id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		Reuniones reunion = session.get(Reuniones.class, Integer.parseInt(id));
@@ -68,9 +81,23 @@ public class ReunionesDao {
 		session.update(reunion);
 		session.getTransaction().commit();
 		session.close();
+		
+		session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from Reuniones as r " +
+                "join fetch r.usersByProfesorId as up " +
+                "join fetch r.usersByAlumnoId as ua " +
+                "join fetch up.tipos as tp " +
+                "join fetch ua.tipos as ta " +
+                "where r.idReunion = :id";	
+		Query q = session.createQuery(hql);
+		q.setParameter("id", id);
+		Reuniones reuniones = (Reuniones) q.uniqueResult();
+		session.close();
+		
+		return reuniones;
 	}
 	
-	public void declineReunion(String id) {
+	public Reuniones declineReunion(String id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		Reuniones reunion = session.get(Reuniones.class, Integer.parseInt(id));
@@ -78,6 +105,20 @@ public class ReunionesDao {
 		session.update(reunion);
 		session.getTransaction().commit();
 		session.close();
+		
+		session = HibernateUtil.getSessionFactory().openSession();
+        String hql = "from Reuniones as r " +
+                "join fetch r.usersByProfesorId as up " +
+                "join fetch r.usersByAlumnoId as ua " +
+                "join fetch up.tipos as tp " +
+                "join fetch ua.tipos as ta " +
+                "where r.idReunion = :id";	
+		Query q = session.createQuery(hql);
+		q.setParameter("id", id);
+		Reuniones reuniones = (Reuniones) q.uniqueResult();
+		session.close();
+		
+		return reuniones;
 	}
 
 }

@@ -70,7 +70,7 @@ public class UsersDao {
 			q.executeUpdate();
 			session.getTransaction().commit();
 			session.close();
-			EmailThread emailThread = new EmailThread(email, newPwd);
+			EmailThread emailThread = new EmailThread("changepwd", email, newPwd);
 			return "1";
 		}
 	}

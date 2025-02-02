@@ -99,6 +99,7 @@ public class DataThread extends Thread {
 				Users userJava = usersDao.checkLoginJava(command[1]);
 				logger.info("Result -> " + userJava);
 				oos.writeObject(userJava);
+				
 		        break;
 			case "loginAndroid":
 				logger.info("Call -> LoginAndroid");
@@ -224,19 +225,22 @@ public class DataThread extends Thread {
 								);
 				
 				Reuniones newBilera = reunionesDao.insertReunion(r);
+				EmailThread emailThread = new EmailThread("insertReunion", newBilera);
 				oos.writeObject(newBilera);
 				logger.info("Result -> " + newBilera);
 				break;
 			case "acceptBilera":
 				logger.info("Call -> acceptBilera");
 				reunionesDao = new ReunionesDao();
-				reunionesDao.acceptReunion(command[1]);
+				Reuniones updateReunion1 = reunionesDao.acceptReunion(command[1]);
+				EmailThread emailThread1 = new EmailThread("insertReunion", updateReunion1);
 				logger.info("Result -> " + "Bilera id " + command[1] + " accepted");
 				break;
 			case "declineBilera":
 				logger.info("Call -> declineBilera");
 				reunionesDao = new ReunionesDao();
-				reunionesDao.declineReunion(command[1]);
+				Reuniones updateReunion2 = reunionesDao.declineReunion(command[1]);
+				EmailThread emailThread2 = new EmailThread("insertReunion", updateReunion2);
 				logger.info("Result -> " + "Bilera id " + command[1] + " declined");
 				break;
 			case "testString":
