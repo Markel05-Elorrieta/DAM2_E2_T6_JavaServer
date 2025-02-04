@@ -196,6 +196,13 @@ public class DataThread extends Thread {
 				oos.writeObject(ikastetxeak);
 				logger.info("Result -> " + ikastetxeak);
 				break;
+			case "getIkastetxe":
+				logger.info("Call -> getIkastetxe");
+                ikastetxeakDao = new IkastetxeakDao();
+                Ikastetxeak ikastetxe = ikastetxeakDao.getIkastetxeaByCCEN(command[1]);
+                oos.writeObject(ikastetxe);
+                logger.info("Result -> " + ikastetxe);
+                break;
 			case "newBilera":
 				logger.info("Call -> newBilera");
 				reunionesDao = new ReunionesDao();

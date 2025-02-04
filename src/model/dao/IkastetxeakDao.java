@@ -36,5 +36,15 @@ public class IkastetxeakDao {
         }
 		
 	}
+	
+	public Ikastetxeak getIkastetxeaByCCEN(String ccen) {
+		List<Ikastetxeak> ikastetxeak = getIkastetxeak();
+		for (Ikastetxeak i : ikastetxeak) {
+			if (i.getCCEN() == Integer.parseInt(ccen)) {
+				return i;
+			}
+		}
+		return null;
+	}
 
 }
