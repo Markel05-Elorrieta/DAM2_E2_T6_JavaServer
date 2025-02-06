@@ -52,7 +52,7 @@ public class DataThread extends Thread {
 	        
 			logger = Logger.getLogger("DataThread");
 			logger.severe("DataThread created");
-			logger.setLevel(Level.INFO);
+			logger.setLevel(Level.OFF);
 			
 		} catch (IOException e) {
 			logger.severe("Error creating DataThread" + e.getMessage());
