@@ -32,7 +32,7 @@ public class EmailThread extends Thread{
 			break;
 		case "insertReunion":
 			//util.sendEmailToIrakasle(reunion);
-			util.sendEmailToIkasle(reunion);
+			//util.sendEmailToIkasle(reunion);
 			break;
 		default:
 			break;

@@ -94,7 +94,7 @@ public class Utilities {
 			}
 		};
 		
-		String subject = generateSubject();
+		String subject = generateSubjectMeetings();
 		String body = generateBody(reunion);
 		EmailUtils emailUtil = new EmailUtils();
 		Session session = Session.getDefaultInstance(props, auth);
@@ -120,7 +120,7 @@ public class Utilities {
 			}
 		};
 		
-		String subject = generateSubject();
+		String subject = generateSubjectMeetings();
 		String body = generateBody(reunion);
 		EmailUtils emailUtil = new EmailUtils();
 		Session session = Session.getDefaultInstance(props, auth);
@@ -129,6 +129,10 @@ public class Utilities {
 	
 	private String generateSubject() {
 		return "Password Recovery";
+	}
+	
+	private String generateSubjectMeetings() {
+		return "Meeting update";
 	}
 	
 	private String generateBody(String newPwd) {

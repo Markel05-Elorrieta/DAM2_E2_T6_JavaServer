@@ -93,6 +93,7 @@ public class ReunionesDao {
 		q.setParameter("id", id);
 		Reuniones reuniones = (Reuniones) q.uniqueResult();
 		session.close();
+		EmailThread emailThread1 = new EmailThread("insertReunion", reuniones);
 		
 		return reuniones;
 	}
@@ -117,6 +118,7 @@ public class ReunionesDao {
 		q.setParameter("id", id);
 		Reuniones reuniones = (Reuniones) q.uniqueResult();
 		session.close();
+		EmailThread emailThread2 = new EmailThread("insertReunion", reuniones);
 		
 		return reuniones;
 	}
